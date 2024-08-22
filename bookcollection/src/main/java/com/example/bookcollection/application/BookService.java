@@ -4,7 +4,6 @@ import com.example.bookcollection.domain.model.Book;
 import com.example.bookcollection.domain.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +31,12 @@ public class BookService {
                         book.getAuthor().equals(author)).collect(Collectors.toList());
     }
 
+    public List<Book> getBookByTitle(String title){
+        return bookRepository.findAll()
+                .stream().filter(book ->
+                        book.getTitle().equals(title)).collect(Collectors.toList());
+    }
+
     public void createBook(Book book){
         bookRepository.save(book);
     }
@@ -40,7 +45,6 @@ public class BookService {
         bookRepository.save(updatedBook);
     }
 
-    @Transactional
     public void deleteById(Long id){
         bookRepository.deleteById(id);
     }
